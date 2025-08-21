@@ -24,23 +24,26 @@ export function Sidebar() {
     // );
   };
 
-  useEffect(() => {
-    // Keep collapsible open, when it's subpage is active
-    NAV_DATA.some((section) => {
-      return section.items.some((item) => {
-        return item.items.some((subItem) => {
+  NAV_DATA.forEach((section) => {
+    section.items.forEach((item) => {
+      if (item.items && item.items.length > 0) {
+        item.items.forEach((subItem) => {
           if (subItem.url === pathname) {
             if (!expandedItems.includes(item.title)) {
               toggleExpanded(item.title);
             }
-
-            // Break the loop
-            return true;
           }
         });
-      });
+      } else {
+        // Jika item langsung punya url
+        if (item.url === pathname) {
+          if (!expandedItems.includes(item.title)) {
+            toggleExpanded(item.title);
+          }
+        }
+      }
     });
-  }, [pathname]);
+  });
 
   return (
     <>
@@ -97,21 +100,21 @@ export function Sidebar() {
                   <ul className="space-y-2">
                     {section.items.map((item) => (
                       <li key={item.title}>
-                        {item.items.length ? (
+                        {item.items?.length ? (
                           <div>
                             <MenuItem
                               isActive={item.items.some(
-                                ({ url }) => url === pathname,
+                                (subItem) => subItem.url === pathname,
                               )}
                               onClick={() => toggleExpanded(item.title)}
                             >
-                              <item.icon
-                                className="size-6 shrink-0"
-                                aria-hidden="true"
-                              />
-
+                              {item.icon && (
+                                <item.icon
+                                  className="size-6 shrink-0"
+                                  aria-hidden="true"
+                                />
+                              )}
                               <span>{item.title}</span>
-
                               <ChevronUp
                                 className={cn(
                                   "ml-auto rotate-180 transition-transform duration-200",
@@ -122,16 +125,16 @@ export function Sidebar() {
                               />
                             </MenuItem>
 
-                            {/* {expandedItems.includes(item.title) && (
+                            {expandedItems.includes(item.title) && (
                               <ul
-                                className="ml-9 mr-0 space-y-1.5 pb-[15px] pr-0 pt-2"
+                                className="ml-9 space-y-1.5 pb-3 pt-2"
                                 role="menu"
                               >
                                 {item.items.map((subItem) => (
                                   <li key={subItem.title} role="none">
                                     <MenuItem
                                       as="link"
-                                      href={subItem.url}
+                                      href={subItem.url ?? "#"}
                                       isActive={pathname === subItem.url}
                                     >
                                       <span>{subItem.title}</span>
@@ -139,32 +142,32 @@ export function Sidebar() {
                                   </li>
                                 ))}
                               </ul>
-                            )} */}
+                            )}
                           </div>
                         ) : (
-                          (() => {
-                            const href =
-                              "url" in item
-                                ? item.url + ""
-                                : "/" +
-                                  item.title.toLowerCase().split(" ").join("-");
-
-                            return (
-                              <MenuItem
-                                className="flex items-center gap-3 py-3"
-                                as="link"
-                                href={href}
-                                isActive={pathname === href}
-                              >
-                                <item.icon
-                                  className="size-6 shrink-0"
-                                  aria-hidden="true"
-                                />
-
-                                <span>{item.title}</span>
-                              </MenuItem>
-                            );
-                          })()
+                          <MenuItem
+                            className="flex items-center gap-3 py-3"
+                            as="link"
+                            href={
+                              item.url ??
+                              "/" +
+                                item.title.toLowerCase().split(" ").join("-")
+                            }
+                            isActive={
+                              pathname ===
+                              (item.url ??
+                                "/" +
+                                  item.title.toLowerCase().split(" ").join("-"))
+                            }
+                          >
+                            {item.icon && (
+                              <item.icon
+                                className="size-6 shrink-0"
+                                aria-hidden="true"
+                              />
+                            )}
+                            <span>{item.title}</span>
+                          </MenuItem>
                         )}
                       </li>
                     ))}
