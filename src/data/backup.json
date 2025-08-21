@@ -1,0 +1,90 @@
+{
+  "articles": [
+    {
+      "id": "1",
+      "title": "Panduan Membuat Kopi",
+      "content": "Ini adalah contoh artikel tentang cara membuat kopi yang enak dan aromatik.",
+      "userId": "1",
+      "categoryId": "1",
+      "category": {
+        "id": "1",
+        "name": "Minuman",
+        "userId": "1",
+        "createdAt": "2025-08-21T01:00:00Z",
+        "updatedAt": "2025-08-21T01:00:00Z"
+      },
+      "user": {
+        "id": "1",
+        "username": "Admin",
+        "role": "Admin"
+      },
+      "createdAt": "2025-08-21T01:00:00Z",
+      "updatedAt": "2025-08-21T01:00:00Z"
+    },
+    {
+      "id": "2",
+      "title": "Sejarah Kopi Nusantara",
+      "content": "Artikel ini membahas sejarah kopi di Indonesia dari zaman kolonial hingga modern.",
+      "userId": "2",
+      "categoryId": "1",
+      "category": {
+        "id": "1",
+        "name": "Minuman",
+        "userId": "1",
+        "createdAt": "2025-08-21T01:00:00Z",
+        "updatedAt": "2025-08-21T01:00:00Z"
+      },
+      "user": {
+        "id": "2",
+        "username": "UserB",
+        "role": "User"
+      },
+      "createdAt": "2025-08-21T02:00:00Z",
+      "updatedAt": "2025-08-21T02:00:00Z"
+    },
+    {
+      "id": "3",
+      "title": "Tips Menyeduh Kopi ala Barista",
+      "content": "Beberapa tips praktis dari barista profesional untuk menyeduh kopi di rumah.",
+      "userId": "1",
+      "categoryId": "2",
+      "category": {
+        "id": "2",
+        "name": "Tips & Trik",
+        "userId": "1",
+        "createdAt": "2025-08-21T01:30:00Z",
+        "updatedAt": "2025-08-21T01:30:00Z"
+      },
+      "user": {
+        "id": "1",
+        "username": "Admin",
+        "role": "Admin"
+      },
+      "createdAt": "2025-08-21T03:00:00Z",
+      "updatedAt": "2025-08-21T03:00:00Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Minuman",
+      "userId": "1",
+      "createdAt": "2025-08-21T01:00:00Z",
+      "updatedAt": "2025-08-21T01:00:00Z"
+    },
+    {
+      "id": "2",
+      "name": "Tips & Trik",
+      "userId": "1",
+      "createdAt": "2025-08-21T01:30:00Z",
+      "updatedAt": "2025-08-21T01:30:00Z"
+    },
+    {
+      "id": "3",
+      "name": "Resep",
+      "userId": "2",
+      "createdAt": "2025-08-21T02:00:00Z",
+      "updatedAt": "2025-08-21T02:00:00Z"
+    }
+  ]
+}
