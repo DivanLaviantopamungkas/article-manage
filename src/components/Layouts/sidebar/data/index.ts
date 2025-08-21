@@ -1,4 +1,6 @@
+"use client";
 import { Folder, FileText } from "lucide-react";
+import { useEffect, useState } from "react";
 
 type NavItem = {
   title: string;
@@ -12,7 +14,11 @@ type NavSection = {
   items: NavItem[];
 };
 
-const userRole = JSON.parse(localStorage.getItem("user") || "{}")?.role;
+const [userRole, setUserRole] = useState<string | null>(null);
+useEffect(() => {
+  const storedUser = localStorage.getItem("user");
+  setUserRole(storedUser ? JSON.parse(storedUser)?.role : null);
+}, []);
 
 export const NAV_DATA: NavSection[] = [
   {
