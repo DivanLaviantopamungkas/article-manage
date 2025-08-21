@@ -1,35 +1,52 @@
 "use client";
-import { Folder, FileText } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Folder, FileText } from "lucide-react";
 
-type NavItem = {
+export type NavItem = {
   title: string;
-  url?: string; // bisa ada atau tidak
+  url?: string;
   icon?: any;
   items?: NavItem[];
 };
+export type NavSection = { label: string; items: NavItem[] };
 
-type NavSection = {
-  label: string;
-  items: NavItem[];
-};
+export function useNavData() {
+  const [navData, setNavData] = useState<NavSection[]>([]);
 
-const [userRole, setUserRole] = useState<string | null>(null);
-useEffect(() => {
-  const storedUser = localStorage.getItem("user");
-  setUserRole(storedUser ? JSON.parse(storedUser)?.role : null);
-}, []);
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    const userRole = storedUser ? JSON.parse(storedUser)?.role : null;
 
-export const NAV_DATA: NavSection[] = [
-  {
-    label: "MAIN MENU",
-    items: [
-      ...(userRole === "Admin"
-        ? [
-            { title: "Category", url: "/category", icon: Folder, items: [] },
-            { title: "Articles", url: "/article", icon: FileText, items: [] },
-          ]
-        : [{ title: "Articles", url: "/article", icon: FileText, items: [] }]),
-    ],
-  },
-];
+    setNavData([
+      {
+        label: "MAIN MENU",
+        items:
+          userRole === "Admin"
+            ? [
+                {
+                  title: "Category",
+                  url: "/category",
+                  icon: Folder,
+                  items: [],
+                },
+                {
+                  title: "Articles",
+                  url: "/article",
+                  icon: FileText,
+                  items: [],
+                },
+              ]
+            : [
+                {
+                  title: "Articles",
+                  url: "/article",
+                  icon: FileText,
+                  items: [],
+                },
+              ],
+      },
+    ]);
+  }, []);
+
+  return navData;
+}

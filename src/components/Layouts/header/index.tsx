@@ -8,11 +8,18 @@ import { MenuIcon } from "./icons";
 import { Notification } from "./notification";
 import { ThemeToggleSwitch } from "./theme-toggle";
 import { UserInfo } from "./user-info";
+import { useEffect, useState } from "react";
 
 export function Header() {
   const { toggleSidebar, isMobile } = useSidebarContext();
-  const userRole = JSON.parse(localStorage.getItem("user") || "{}")?.role;
-  const roleLabel = userRole === "Admin" ? "Admin" : "User";
+  const [roleLabel, setRoleLabel] = useState<string>("User"); // default
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    const userRole = storedUser ? JSON.parse(storedUser)?.role : null;
+
+    setRoleLabel(userRole === "Admin" ? "Admin" : "User");
+  }, []);
 
   return (
     <header className="sticky top-0 z-30 flex items-center justify-between border-b border-stroke bg-white px-4 py-5 shadow-1 dark:border-stroke-dark dark:bg-gray-dark md:px-5 2xl:px-10">
