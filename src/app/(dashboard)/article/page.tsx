@@ -30,7 +30,7 @@ export default function ArticlesPage() {
   const debouncedQuery = useDebouncedValue(searchInput, 400);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
-  const userRole = JSON.parse(localStorage.getItem("user") || "{}")?.role;
+  const [userRole, setUserRole] = useState<string | null>(null);
   const router = useRouter();
 
   // Fetch articles dari API
@@ -103,6 +103,12 @@ export default function ArticlesPage() {
   const handleEdit = (article: Article) => {
     router.push(`/article/edit/${article.id}`);
   };
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    const role = storedUser ? JSON.parse(storedUser)?.role : null;
+    setUserRole(role);
+  }, []);
 
   return (
     <div className="p-6">
