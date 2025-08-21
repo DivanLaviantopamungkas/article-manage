@@ -1,5 +1,5 @@
-"use client";
-import { useEffect, useState } from "react";
+// src/components/Layouts/sidebar/data/index.ts
+
 import { Folder, FileText } from "lucide-react";
 
 export type NavItem = {
@@ -8,45 +8,12 @@ export type NavItem = {
   icon?: any;
   items?: NavItem[];
 };
-export type NavSection = { label: string; items: NavItem[] };
 
-export function useNavData() {
-  const [navData, setNavData] = useState<NavSection[]>([]);
+export type NavSection = {
+  label: string;
+  items: NavItem[];
+};
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    const userRole = storedUser ? JSON.parse(storedUser)?.role : null;
-
-    setNavData([
-      {
-        label: "MAIN MENU",
-        items:
-          userRole === "Admin"
-            ? [
-                {
-                  title: "Category",
-                  url: "/category",
-                  icon: Folder,
-                  items: [],
-                },
-                {
-                  title: "Articles",
-                  url: "/article",
-                  icon: FileText,
-                  items: [],
-                },
-              ]
-            : [
-                {
-                  title: "Articles",
-                  url: "/article",
-                  icon: FileText,
-                  items: [],
-                },
-              ],
-      },
-    ]);
-  }, []);
-
-  return navData;
-}
+// Bisa tambahkan helper function di sini, tapi jangan pakai useState/useEffect
+export const generateUrlFromTitle = (title: string) =>
+  "/" + title.toLowerCase().replace(/ /g, "-");
